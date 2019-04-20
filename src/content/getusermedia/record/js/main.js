@@ -25,8 +25,11 @@ const recordButton = document.querySelector('button#record');
 recordButton.addEventListener('click', () => {
   if (recordButton.textContent === 'Start Recording') {
     startRecording();
+    startRecord();
   } else {
+      stopRecord();
     stopRecording();
+
     recordButton.textContent = 'Start Recording';
     playButton.disabled = false;
     downloadButton.disabled = false;
@@ -43,6 +46,7 @@ playButton.addEventListener('click', () => {
   recordedVideo.play();
 });
 
+const fileNameInput = document.querySelector('input#file-name');
 const downloadButton = document.querySelector('button#download');
 downloadButton.addEventListener('click', () => {
   const blob = new Blob(recordedBlobs, {type: 'video/webm'});
@@ -50,7 +54,7 @@ downloadButton.addEventListener('click', () => {
   const a = document.createElement('a');
   a.style.display = 'none';
   a.href = url;
-  a.download = 'test.webm';
+  a.download = `${fileNameInput.value}.webm`;
   document.body.appendChild(a);
   a.click();
   setTimeout(() => {
@@ -147,3 +151,52 @@ document.querySelector('button#start').addEventListener('click', async () => {
   console.log('Using media constraints:', constraints);
   await init(constraints);
 });
+
+// <button id="stopRecord-action">ResetAction</button>
+// <button id="jump">Jump</button>
+//     <button id="squat">Squat</button>
+//     <button id="one-arm">One Arm</button>
+// <button id="both-arms">Both Arms</button>
+// <button id="lean-forward">lean-forward</button>
+//     <button id="jumping-jack">Jumping Jack</button>
+// <button id="stand">stand</button>
+
+
+let startTime = 0;
+let sequence = [];
+
+
+const jumpButton = document.querySelector('button#jump');
+const squatButton = document.querySelector('button#squat');
+const oneArmButton = document.querySelector('button#one-arm');
+const bothArmsButton = document.querySelector('button#both-arms');
+const leanForwardButton = document.querySelector('button#lean-forward');
+const jumpJackButton = document.querySelector('button#jumping-jack');
+const standButton = document.querySelector('button#stand');
+
+function startRecord() {
+  startTime = Date.now();
+  console.log('Starting to record, time', Date.now());
+}
+
+function stopRecord() {
+  console.log('Stopping to record, time', Date.now());
+  console.log('last sequence', JSON.stringify(sequence));
+  sequence = [];
+}
+
+function logAction(action) {
+  sequence.push({
+    time: Date.now() - startTime,
+    action: action
+  });
+  console.log('action added', sequence[sequence.length - 1]);
+}
+
+jumpButton.addEventListener('click', () => logAction('jump'));
+squatButton.addEventListener('click', () => logAction('squat'));
+oneArmButton.addEventListener('click', () => logAction('one arm'));
+bothArmsButton.addEventListener('click', () => logAction('both arms'));
+leanForwardButton.addEventListener('click', () => logAction('lean forward'));
+jumpJackButton.addEventListener('click', () => logAction('jump jack'));
+standButton.addEventListener('click', () => logAction('stand'));

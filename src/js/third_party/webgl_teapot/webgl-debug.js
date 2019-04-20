@@ -937,7 +937,7 @@ return {
   /**
    * Resets a context to the initial state.
    * @param {!WebGLRenderingContext} ctx The webgl context to
-   *     reset.
+   *     stopRecord.
    */
   'resetToInitialState': resetToInitialState
 };

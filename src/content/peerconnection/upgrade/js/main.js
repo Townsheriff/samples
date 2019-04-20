@@ -139,7 +139,7 @@ function onSetSessionDescriptionError(error) {
 function gotRemoteStream(e) {
   console.log('gotRemoteStream', e.track, e.streams[0]);
 
-  // reset srcObject to work around minor bugs in Chrome and Edge.
+  // stopRecord srcObject to work around minor bugs in Chrome and Edge.
   remoteVideo.srcObject = null;
   remoteVideo.srcObject = e.streams[0];
 }

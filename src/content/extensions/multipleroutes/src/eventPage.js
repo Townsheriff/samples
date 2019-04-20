@@ -33,7 +33,7 @@ function resetOldBooleans(callback) {
     pn.webRTCMultipleRoutesEnabled.set({
       value: true
     }, function() {
-      callback('Successfully reset the booleans');
+      callback('Successfully stopRecord the booleans');
     });
   });
 }
@@ -42,7 +42,7 @@ function resetOldBooleans(callback) {
 // previous booleans to the default. Future chrome updates could trigger this
 // function again but they will either stop the conversion if
 // webRTCIPHandlingPolicy is not "default" or for the case of "default", since
-// the previous booleans have been reset to default, it'll be translate to
+// the previous booleans have been stopRecord to default, it'll be translate to
 // "default" again.
 function convertBooleansToPolicy(isInstall, callback) {
   if (!browserSupportsIPHandlingPolicy()) {
